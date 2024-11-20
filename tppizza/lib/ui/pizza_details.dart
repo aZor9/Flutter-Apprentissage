@@ -33,7 +33,8 @@ class _PizzaDetailsState extends State<PizzaDetails> {
           ),
 
           Image.asset(
-            'assets/images/pizza/${widget._pizza.image}',
+            /* 'assets/images/pizza/${widget._pizza.image}', */
+            '${widget._pizza.image}',
             height: 180,
           ),
           Text(

@@ -75,7 +75,8 @@ class MyHomePage extends StatelessWidget  {
         children: <Widget>[
           Expanded(
             child:Image.asset(
-              'assets/images/menus/${menu.image}',
+              '${menu.image}',
+              /* 'assets/images/menus/${menu.image}', */
               fit: BoxFit.fitWidth,
             ),
           ),

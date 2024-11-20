@@ -81,7 +81,10 @@ class _PanierState extends State<Panier> {
       children: [
 
         Image.asset(
-          'assets/images/pizza/${cartItem.pizza.image}',
+
+          /* 'assets/images/pizza/${cartItem.pizza.image}', */
+          '${cartItem.pizza.image}',
+
           height: 120,
           width: 120,
           fit: BoxFit.fitWidth,
