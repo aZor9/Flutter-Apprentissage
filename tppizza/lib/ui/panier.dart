@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tppizza/models/cart.dart';
+import 'package:tppizza/models/pizza.dart';
 import 'package:tppizza/ui/share/total_widget.dart';
 
 class Panier extends StatefulWidget {
@@ -79,16 +80,24 @@ class _PanierState extends State<Panier> {
   Widget _buildItem(CartItem cartItem) {
     return Row(
       children: [
-
+/*
         Image.asset(
 
-          /* 'assets/images/pizza/${cartItem.pizza.image}', */
-          '${cartItem.pizza.image}',
+         'assets/images/pizza/${cartItem.pizza.image}',
 
           height: 120,
           width: 120,
           fit: BoxFit.fitWidth,
         ),
+    */
+        Image.network(
+
+          Pizza.fixUrl(cartItem.pizza.image),
+          height: 120,
+          width: 120,
+          fit: BoxFit.fitWidth,
+        ),
+
 
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

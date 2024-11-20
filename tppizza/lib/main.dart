@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tppizza/models/cart.dart';
+import 'package:tppizza/models/pizza.dart';
 import 'package:tppizza/ui/share/appbar_widget.dart';
 import 'models/menu.dart';
 import 'dart:ui';
@@ -75,8 +76,7 @@ class MyHomePage extends StatelessWidget  {
         children: <Widget>[
           Expanded(
             child:Image.asset(
-              '${menu.image}',
-              /* 'assets/images/menus/${menu.image}', */
+              'assets/images/menus/${menu.image}',
               fit: BoxFit.fitWidth,
             ),
           ),

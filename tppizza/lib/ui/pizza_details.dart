@@ -8,6 +8,7 @@ import 'package:tppizza/ui/share/pizzeria_style.dart';
 import 'package:tppizza/models/option_item.dart';
 import 'package:tppizza/ui/share/total_widget.dart';
 
+
 class PizzaDetails extends StatefulWidget {
   final Pizza _pizza;
   final Cart _cart;
@@ -31,10 +32,14 @@ class _PizzaDetailsState extends State<PizzaDetails> {
             'Pizza ${widget._pizza.title}',
             style: PizzeriaStyle.pageTitleTextStyle,
           ),
-
+/*
           Image.asset(
-            /* 'assets/images/pizza/${widget._pizza.image}', */
-            '${widget._pizza.image}',
+            'assets/images/pizza/${widget._pizza.image}',
+            height: 180,
+          ),
+*/
+          Image.network(
+            Pizza.fixUrl(widget._pizza.image),
             height: 180,
           ),
           Text(

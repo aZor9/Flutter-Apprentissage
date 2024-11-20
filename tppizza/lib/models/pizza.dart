@@ -22,6 +22,10 @@ class Pizza {
         image = json['image'],
         price = json['price'];
 
+  static String fixUrl(String url) {
+    return url.replaceAll('localhost', '10.0.2.2');
+  }
+
   // Options possibles
   static final List<OptionItem> pates = [
     OptionItem(0, "Pâte fine"),
