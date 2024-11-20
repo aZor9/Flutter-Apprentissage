@@ -4,13 +4,33 @@ import 'dart:ui';
 import 'package:tppizza/models/option_item.dart';
 
 class Pizza {
+
+  /*
   final int id;
   final String title;
   final String garniture;
   final String image;
   final double price;
+  */
 
-  // La sélection de l'utilisateur
+
+  Pizza(this.id, this.title, this.garniture, this.image, this.price);
+
+
+  Pizza.formJson(Map<String, dynamic> json)
+    : id = json['id'];
+      title = json['title'];
+      garniture = json['garniture'];
+      image = json['image'];
+      price = json['price'];
+
+
+}
+
+
+
+
+// La sélection de l'utilisateur
   int pate = 0;
   int taille = 1;
   int sauce = 0;
@@ -41,18 +61,5 @@ class Pizza {
     return total;
   }
 
-
-  Pizza(this.id, this.title, this.garniture, this.image, this.price);
-
-
-  Pizza.formJson(Map<String, dynamic> json)
-    : id = json['id'];
-      title = json['title'];
-      garniture = json['garniture'];
-      image = json['image'];
-      price = json['price'];
-
-
-}
 
 

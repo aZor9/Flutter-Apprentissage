@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tppizza/models/cart.dart';
+import 'package:tppizza/services/pizzeria_service.dart';
 import 'package:tppizza/ui/pizza_details.dart';
 import 'package:tppizza/ui/share/appbar_widget.dart';
 import 'package:tppizza/ui/share/buy_button_widget.dart';
+import 'package:tppizza/ui/share/pizzeria_style.dart';
 import 'dart:ui';
 import '../models/pizza.dart';
 import '../models/pizza_data.dart';
@@ -19,13 +21,19 @@ class PizzaList extends StatefulWidget {
 
 class _PizzaListState extends State<PizzaList> {
 // La liste des pizzas
-  List<Pizza> _pizzas = [];
+  /* List<Pizza> _pizzas = []; */
+  late Future<List<Pizza>> _pizzas;
+  PizzeriaService _service = PizzeriaService();
+
 
   @override
   void initState() {
-    _pizzas = PizzaData.buildList();
+    /* _pizzas = PizzaData.buildList(); */
+    _pizzas = _service.fetchPizzas();
   }
 
+
+  /*
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +46,50 @@ class _PizzaListState extends State<PizzaList> {
               return _buildRow(_pizzas[index]);
             }));
   }
+  */
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBarWidget('Nos Pizzas', widget._cart),
+      body: FutureBuilder(
+        future: _pizzas,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _buildListView(snapshot.data!);
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                'Impossible de récupérer les données : ${snapshot.error}',
+                style: PizzeriaStyle.errorTextStyle,
+              ),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
+    );
+  }
+
+
+  _buildListView(List<Pizza> pizzas) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(8.0),
+      itemCount: pizzas.length,
+      itemBuilder: (context, index) {
+        return _buildRow(pizzas[index]);
+    }
+      );
+  }
+
+
+
+
+
+
+
 
   _buildRow(Pizza pizza) {
     return Card(
@@ -66,6 +118,8 @@ class _PizzaListState extends State<PizzaList> {
         ),
     );
   }
+
+
 
   _buildPizzaDetails(Pizza pizza) {
     return Column(
