@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tppizza/models/cart.dart';
 import 'package:tppizza/models/pizza.dart';
-import 'package:tppizza/ui/share/total_widget.dart';
+// import 'package:tppizza/ui/share/total_widget.dart';
 
 class Panier extends StatefulWidget {
   final Cart _cart;
