@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:tppizza/models/pizza.dart';
 
 class CartItem {
@@ -7,7 +8,7 @@ class CartItem {
   CartItem(this.pizza, [this.quantity = 1]);
 }
 
-class Cart {
+class Cart extends ChangeNotifier {
   List<CartItem> _items = [];
 
 
@@ -33,6 +34,7 @@ class Cart {
       CartItem item = _items[index];
       item.quantity++;
     }
+    notifyListeners();
   }
 
   void removeProduct(Pizza pizza) {
@@ -43,6 +45,7 @@ class Cart {
       // Suppression
       _items.removeAt(index);
     }
+    notifyListeners();
   }
 
   void removeOneProduct(Pizza pizza) {
@@ -60,6 +63,7 @@ class Cart {
         _items.removeAt(index);
       }
     }
+    notifyListeners();
   }
 
 
@@ -68,3 +72,4 @@ class Cart {
     return _items.indexWhere((element) => element.pizza.id == id);
   }
 }
+

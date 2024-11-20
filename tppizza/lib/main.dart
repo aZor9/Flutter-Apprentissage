@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tppizza/models/cart.dart';
 import 'package:tppizza/models/pizza.dart';
 import 'package:tppizza/ui/share/appbar_widget.dart';
@@ -7,7 +8,12 @@ import 'dart:ui';
 import 'ui/pizza_list.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Cart(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget{

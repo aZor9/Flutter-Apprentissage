@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tppizza/models/cart.dart';
 import 'dart:ui';
 
@@ -12,6 +13,7 @@ class BuyButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cart = Provider.of<Cart>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
