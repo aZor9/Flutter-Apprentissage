@@ -1,4 +1,4 @@
-/*
+
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +56,15 @@ class _CartTotal extends StatelessWidget {
                           ]
                       )
 
+                      Container(
+                        child: ElevatedButton(
+                          child: Text('Valider'),
+                          onPressed: () {
+                            print('Valider');
+                          },
+                        ),
+                      ),
+
                     ]
                 );
               }
@@ -64,4 +73,42 @@ class _CartTotal extends StatelessWidget {
     );
   }
 }
-*/
+
+
+
+
+
+
+
+
+/*
+          Container(
+
+            child: Table(
+              border: TableBorder.all(),
+              children: [
+                TableRow(children : [
+                Text(' Total HT : ', style: TextStyle(fontSize: 18)),
+                Text(' ${totalAmountHT.toStringAsFixed(2)} €', style: TextStyle(fontSize: 18)),
+                  ]),
+                TableRow(children : [
+                  Text(' TVA : ', style: TextStyle(fontSize: 18)),
+                  Text(' ${totalTVA.toStringAsFixed(2)} €', style: TextStyle(fontSize: 18)),
+                  ]),
+                TableRow(children : [
+                  Text(' Total TTC : ', style: TextStyle(fontSize: 18)),
+                  Text(' ${totalAmount.toStringAsFixed(2)} €', style: TextStyle(fontSize: 18)),
+                ]),
+              ]
+            )
+
+
+          ),
+          Container(
+            child: ElevatedButton(
+              child: Text('Valider'),
+              onPressed: () {
+                print('Valider');
+              },
+            ),
+          ), */
