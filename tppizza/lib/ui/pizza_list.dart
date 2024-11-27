@@ -8,7 +8,7 @@ import 'package:tppizza/ui/share/buy_button_widget.dart';
 import 'package:tppizza/ui/share/pizzeria_style.dart';
 import 'dart:ui';
 import '../models/pizza.dart';
-import '../models/pizza_data.dart';
+// import '../models/pizza_data.dart';
 
 class PizzaList extends StatefulWidget {
   final String title;

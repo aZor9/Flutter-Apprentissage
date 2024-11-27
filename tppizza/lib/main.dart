@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tppizza/models/cart.dart';
-import 'package:tppizza/models/pizza.dart';
+// import 'package:tppizza/models/pizza.dart';
 import 'package:tppizza/ui/share/appbar_widget.dart';
 import 'models/menu.dart';
 import 'dart:ui';
 import 'ui/pizza_list.dart';
+
+import 'ui/panier.dart';
+import 'ui/profil.dart';
 
 void main() {
   runApp(
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(title: 'Ma Pizzeria'), // Compromis entre les deux precedent
       routes: {
         '/profil': (context) => Profil(),
-        '/panier': (context) => Panier(),
+        '/panier': (context) => Panier(Provider.of<Cart>(context, listen: false)),
       },
     );
   }

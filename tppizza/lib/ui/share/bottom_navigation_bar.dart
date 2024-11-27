@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tppizza/main.dart';
 import 'package:tppizza/ui/share/badge_widget.dart';
-import 'package:tppizza/ui/share/buy_button_widget.dart';
 import 'package:tppizza/models/cart.dart';
 import 'package:provider/provider.dart';
+/*
+import 'package:tppizza/main.dart';
+import 'package:tppizza/ui/share/buy_button_widget.dart';
+
+ */
+
 
 
 class BottomNavigationBarWidget extends StatelessWidget {
@@ -13,7 +17,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cart = context.watch<Cart>();
-    var _totalItems = cart.totalQuantity();
+    var _totalItems = cart.totalItems();
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
