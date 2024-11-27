@@ -1,4 +1,4 @@
-
+/*
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +74,7 @@ class _CartTotal extends StatelessWidget {
   }
 }
 
-
+*/
 
 
 

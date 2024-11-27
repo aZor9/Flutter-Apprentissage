@@ -5,29 +5,21 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:tppizza/models/pizza.dart';
 import 'package:tppizza/ui/share/pizzeria_style.dart';
-// import 'package:tppizza/models/pizza.dart';
-// import 'package:tppizza/ui/share/cart_list_widget.dart';
-// import 'package:tppizza/ui/share/cart_total_widget.dart';
-// import 'package:tppizza/ui/share/total_widget.dart';
 
 class Panier extends StatefulWidget {
   final Cart _cart;
   const Panier(this._cart, {super.key});
 
-
   @override
   State<Panier> createState() => _PanierState();
 }
 
-
 class _PanierState extends State<Panier> {
   @override
-
-
   Widget build(BuildContext context) {
-    double totalAmount = widget._cart.getItems().fold(0, (sum, item) => sum + (item.pizza.price * item.quantity ));
+    double totalAmount = widget._cart.getItems().fold(0, (sum, item) => sum + (item.pizza.price * item.quantity));
     double TVA = 10;
-    double totalTVA = (totalAmount / (100 + TVA) ) * TVA ;
+    double totalTVA = (totalAmount / (100 + TVA)) * TVA;
     double totalAmountHT = totalAmount - totalTVA;
 
     return Scaffold(
@@ -37,207 +29,140 @@ class _PanierState extends State<Panier> {
       body: Column(
         children: [
           Expanded(
-            child: Padding(padding: const EdgeInsets.all(8.0), child: _CartList(),),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _CartList(), // Affichage de la liste des produits
             ),
           ),
-          _CartTotal();
+          _CartTotal(cart: widget._cart), // Affichage du total du panier
         ],
       ),
     );
   }
+}
 
-  /*
-  Widget _buildItem(CartItem cartItem) {
+class _CartList extends StatelessWidget {
+  var format = NumberFormat("###.00 €");
+
+  @override
+  Widget build(BuildContext context) {
+    // Utilisation de Provider pour accéder au panier
+    var cart = context.watch<Cart>();
+
+    return ListView.builder(
+      itemCount: cart.totalItems(), // Nombre d'éléments dans le panier
+      itemBuilder: (context, index) {
+        final cartItem = cart.getCartItem(index); // Récupère l'élément du panier à l'index donné
+        return _buildItem(cartItem, cart); // Affiche l'élément du panier
+      },
+    );
+  }
+
+  Widget _buildItem(CartItem cartItem, Cart cart) {
     return Row(
       children: [
-/*
-        Image.asset(
-
-         'assets/images/pizza/${cartItem.pizza.image}',
-
-          height: 120,
-          width: 120,
-          fit: BoxFit.fitWidth,
-        ),
-    */
+        // Affichage de l'image de la pizza
         Image.network(
-
           Pizza.fixUrl(cartItem.pizza.image),
           height: 120,
           width: 120,
           fit: BoxFit.fitWidth,
         ),
-
-
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(cartItem.pizza.title),
-            Text('Quantité : ${cartItem.quantity}'),
-            // Text('${widget._cart.findCartItemIndex(cartItem.pizza.id)}'),
+            Text(cartItem.pizza.title), // Titre de la pizza
+            Text('Quantité : ${cartItem.quantity}'), // Quantité
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Bouton pour retirer une unité de produit
                 IconButton(
                   icon: Icon(Icons.remove),
                   onPressed: () {
-                    setState(() {
-                      widget._cart.removeOneProduct(cartItem.pizza);
-
-                    });
+                    cart.removeOneProduct(cartItem.pizza); // Retirer un produit
                   },
                 ),
-                Text('Prix : ${cartItem.pizza.total.toStringAsFixed(2)} €'),
+                Text('Prix : ${cartItem.pizza.total.toStringAsFixed(2)} €'), // Prix de la pizza
+                // Bouton pour ajouter une unité de produit
                 IconButton(
                   icon: Icon(Icons.add),
                   onPressed: () {
-                    setState(() {
-                    widget._cart.addProduct(cartItem.pizza);
-                    });
-                  }
-                )
-                ]
-              ),
-              Text('Sous-total : ${(cartItem.pizza.total * cartItem.quantity).toStringAsFixed(2)} €'),
+                    cart.addProduct(cartItem.pizza); // Ajouter un produit
+                  },
+                ),
               ],
-
-
-
-        )
-      ],
-    );
-  }
-  */
-
-
-}
-
-
-
-
-class _CartList extends StatelessWidget {
-
-  var format = NumberFormat("###.00 €");
-  // const _CartList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var cart = context.watch<Cart>();
-    return ListView.builder(
-        itemCount: _cart.totalItems(),
-    itemBuilder: (context, index) {
-    final cartItem = _cart.getCartItem(index);
-    return _buildItem(cartItem);
-    };
-  }
-
-
-  Widget _buildItem(CartItem cartItem) {
-    return Row(
-      children: [
-
-        Image.network(
-
-          Pizza.fixUrl(cartItem.pizza.image),
-          height: 120,
-          width: 120,
-          fit: BoxFit.fitWidth,
-        ),
-
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(cartItem.pizza.title),
-            Text('Quantité : ${cartItem.quantity}'),
-            // Text('${widget._cart.findCartItemIndex(cartItem.pizza.id)}'),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                      setState(() {
-                        _cart.removeOneProduct(cartItem.pizza);
-
-                      });
-                    },
-                  ),
-                  Text('Prix : ${cartItem.pizza.total.toStringAsFixed(2)} €'),
-                  IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        setState(() {
-                          widget._cart.addProduct(cartItem.pizza);
-                        });
-                      }
-                  )
-                ]
             ),
+            // Affichage du sous-total pour cet élément du panier
             Text('Sous-total : ${(cartItem.pizza.total * cartItem.quantity).toStringAsFixed(2)} €'),
           ],
-
-
-
-        )
+        ),
       ],
     );
   }
-
-
-
-
-
-
 }
 
+class _CartTotal extends StatelessWidget {
+  var format = NumberFormat("###.00 €");
+  final Cart cart;
 
-
-
-
-
-class TotalWidget extends StatelessWidget {
-  final double total;
-  const TotalWidget(this.total, {super.key});
+  const _CartTotal({required this.cart});
 
   @override
   Widget build(BuildContext context) {
-    var format = NumberFormat('###.00 €');
-    String totalAffiche = format.format(total);
+    double totalAmount = cart.getItems().fold(0, (sum, item) => sum + (item.pizza.price * item.quantity ));
+    double TVA = 10;
+    double totalTVA = (totalAmount / (100 + TVA) ) * TVA ;
+    double totalAmountHT = totalAmount - totalTVA;
 
     return Container(
-      padding: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        border: Border.all(
-          color: Colors.black,
-          width: 2,
-        ),
+      padding: EdgeInsets.all(12.0),
+      height: 220,
+      child: Consumer<Cart>(
+          builder: (context, cart, child) {
+            final double _total = cart.getTotalPrice(); // Appeler la bonne méthode
+            if (_total == 0) {
+              return Center(
+                child: Text('Aucun produit',
+                  style: PizzeriaStyle.priceTotalTextStyle,),
+              );
+            } else {
+              return Column(
+                children: [
+                  Table(
+                      border: TableBorder.all(),
+                      children: [
+                        TableRow(children: [
+                          Text(' Total HT : ',
+                              style: TextStyle(fontSize: 18)),
+                          Text(' ${totalAmountHT.toStringAsFixed(2)} €',
+                              style: TextStyle(fontSize: 18)),
+                        ]),
+                        TableRow(children: [
+                          Text(' TVA : ', style: TextStyle(fontSize: 18)),
+                          Text(' ${totalTVA.toStringAsFixed(2)} €',
+                              style: TextStyle(fontSize: 18)),
+                        ]),
+                        TableRow(children: [
+                          Text(' Total TTC : ',
+                              style: TextStyle(fontSize: 18)),
+                          Text(' ${totalAmount.toStringAsFixed(2)} €',
+                              style: TextStyle(fontSize: 18)),
+                        ]),
+                      ]
+                  ),
+                  ElevatedButton(
+                    child: Text('Valider'),
+                    onPressed: () {
+                      print('Valider');
+                    },
+                  ),
+                ],
+              );
+            }
+          }
       ),
-
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: 12.0),
-              child: Text(
-                'TOTAL',
-                style: PizzeriaStyle.priceTotalTextStyle,
-                textAlign: TextAlign.end,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              totalAffiche,
-              style: PizzeriaStyle.priceTotalTextStyle,
-              textAlign: TextAlign.end,
-            ),
-          ),
-        ],
-      ),
-
     );
   }
 }
