@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tppizza/main.dart';
+import 'package:tppizza/ui/share/badge_widget.dart';
+import 'package:tppizza/ui/share/buy_button_widget.dart';
+import 'package:tppizza/models/cart.dart';
+import 'package:provider/provider.dart';
 
-class BottomNavigationBar extends StatelessWidget {
+
+class BottomNavigationBarWidget extends StatelessWidget {
   final int indexSelected;
-  const BottomNavigationBar(this.indexSelected, {super.key});
+  const BottomNavigationBarWidget(this.indexSelected, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class BottomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: _totalItems == 0
-            ? Icon(Icons.shopping_cart_outlined),
+            ? Icon(Icons.shopping_cart_outlined)
             : BadgeWidget(
               child: Icon(Icons.shopping_cart),
               value: _totalItems,

@@ -16,19 +16,26 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget{
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
-  Widget build  (BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pizzeria',
       theme : ThemeData (
         primarySwatch : Colors.blue,
       ),
-      home : MyHomePage(title : 'pizzeria'),
-
+      // home : MyHomePage(title : 'pizzeria'), // avant TD6
+      // home: HomePage(title: 'Ma Pizzeria'), // dans le TD6
+      home: MyHomePage(title: 'Ma Pizzeria'), // Compromis entre les deux precedent
+      routes: {
+        '/profil': (context) => Profil(),
+        '/panier': (context) => Panier(),
+      },
     );
   }
 }
+
 
 class MyHomePage extends StatelessWidget  {
   String title;
