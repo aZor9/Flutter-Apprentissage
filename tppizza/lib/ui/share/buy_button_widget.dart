@@ -18,7 +18,7 @@ class BuyButtonWidget extends StatelessWidget {
         ElevatedButton(
           style: ButtonStyle(
             backgroundColor:
-              MaterialStateProperty.all<Color>(Colors.red.shade800)),
+              MaterialStateProperty.all<Color>(Colors.lightBlue.shade100)),
           child: Row(
             children: [
               Icon(Icons.shopping_cart),
