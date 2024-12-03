@@ -31,29 +31,37 @@ class _PanierState extends State<Panier> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: _CartList(), // Affichage de la liste des produits
+              child: _CartList(widget._cart), // Affichage de la liste des produits
             ),
           ),
-          _CartTotal(cart: widget._cart), // Affichage du total du panier
+          _CartTotal(widget._cart), // Affichage du total du panier
         ],
       ),
     );
   }
 }
 
-class _CartList extends StatelessWidget {
+class _CartList extends StatefulWidget {
+  final Cart _cart;
+  const _CartList(this._cart, {super.key});
+
+  @override
+  State<_CartList> createState() => _CartListState();
+}
+
+class _CartListState extends State<_CartList> {
   var format = NumberFormat("###.00 €");
 
   @override
   Widget build(BuildContext context) {
     // Utilisation de Provider pour accéder au panier
-    var cart = context.watch<Cart>();
+    // var cart = context.watch<Cart>();
 
     return ListView.builder(
-      itemCount: cart.totalItems(), // Nombre d'éléments dans le panier
+      itemCount: widget._cart.totalItems(), // Nombre d'éléments dans le panier
       itemBuilder: (context, index) {
-        final cartItem = cart.getCartItem(index); // Récupère l'élément du panier à l'index donné
-        return _buildItem(cartItem, cart); // Affiche l'élément du panier
+        final cartItem = widget._cart.getCartItem(index); // Récupère l'élément du panier à l'index donné
+        return _buildItem(cartItem, widget._cart); // Affiche l'élément du panier
       },
     );
   }
@@ -81,7 +89,9 @@ class _CartList extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.remove),
                   onPressed: () {
-                    cart.removeOneProduct(cartItem.pizza); // Retirer un produit
+                    setState(() {
+                      cart.removeOneProduct(cartItem.pizza); // Retirer un produit
+                    });
                   },
                 ),
                 Text('Prix : ${cartItem.pizza.total.toStringAsFixed(2)} €'), // Prix de la pizza
@@ -89,8 +99,10 @@ class _CartList extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.add),
                   onPressed: () {
-                    cart.addProduct(cartItem.pizza); // Ajouter un produit
-                  },
+                    setState(() {
+                      cart.addProduct(cartItem.pizza); // Ajouter un produit
+                    });
+                   },
                 ),
               ],
             ),
@@ -103,18 +115,28 @@ class _CartList extends StatelessWidget {
   }
 }
 
-class _CartTotal extends StatelessWidget {
-  final format = NumberFormat("###.00 €");
-  final Cart cart;
 
-  _CartTotal({required this.cart});
+class _CartTotal extends StatefulWidget {
+  final Cart cart;
+  const _CartTotal(this.cart, {super.key});
+
+  @override
+  State<_CartTotal> createState() => _CartTotalState();
+}
+
+class _CartTotalState extends State<_CartTotal> {
+  final format = NumberFormat("###.00 €");
 
   @override
   Widget build(BuildContext context) {
-    double totalAmount = cart.getItems().fold(0, (sum, item) => sum + (item.pizza.price * item.quantity ));
+    //Cart cart = context.watch<Cart>();
+
+    print("_CartTotal build");
+    double totalAmount = widget.cart.getItems().fold(0, (sum, item) => sum + (item.pizza.price * item.quantity ));
     double TVA = 10;
     double totalTVA = (totalAmount / (100 + TVA) ) * TVA ;
     double totalAmountHT = totalAmount - totalTVA;
+
 
     return Container(
       padding: EdgeInsets.all(12.0),
@@ -122,6 +144,7 @@ class _CartTotal extends StatelessWidget {
       child: Consumer<Cart>(
           builder: (context, cart, child) {
             // final double _total = cart.getTotalPrice(); // Appeler la bonne méthode
+            print("_CartTotal build Consumer");
             if (totalAmount == 0) {
               return Center(
                 child: Text('Aucun produit',

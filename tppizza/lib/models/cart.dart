@@ -34,6 +34,7 @@ class Cart extends ChangeNotifier {
       CartItem item = _items[index];
       item.quantity++;
     }
+    print("Ajout produit");
     notifyListeners();
   }
 
