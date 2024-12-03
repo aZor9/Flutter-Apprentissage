@@ -104,10 +104,10 @@ class _CartList extends StatelessWidget {
 }
 
 class _CartTotal extends StatelessWidget {
-  var format = NumberFormat("###.00 €");
+  final format = NumberFormat("###.00 €");
   final Cart cart;
 
-  const _CartTotal({required this.cart});
+  _CartTotal({required this.cart});
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +121,8 @@ class _CartTotal extends StatelessWidget {
       height: 220,
       child: Consumer<Cart>(
           builder: (context, cart, child) {
-            final double _total = cart.getTotalPrice(); // Appeler la bonne méthode
-            if (_total == 0) {
+            // final double _total = cart.getTotalPrice(); // Appeler la bonne méthode
+            if (totalAmount == 0) {
               return Center(
                 child: Text('Aucun produit',
                   style: PizzeriaStyle.priceTotalTextStyle,),
